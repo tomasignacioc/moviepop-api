@@ -16,8 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   Review.init({
     movieId: DataTypes.STRING,
     text: DataTypes.STRING,
-    score: DataTypes.INTEGER,
-    userName: DataTypes.STRING
+    score: {
+      type: DataTypes.FLOAT,
+      validate: {
+        min: 0,
+        max: 5
+      }
+    },
+    username: DataTypes.STRING
   }, {
     sequelize,
     paranoid: true,

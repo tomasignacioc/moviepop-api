@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   FavMovie.init({
     name: DataTypes.STRING,
-    userId: DataTypes.STRING
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     paranoid: true,

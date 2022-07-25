@@ -10,7 +10,6 @@ module.exports = {
       },
       movieId: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING
       },
       text: {
@@ -18,14 +17,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       score: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         validate: {
-          isIn: {
-            args: ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5'],
-          }
+          min: 0,
+          max: 5
         }
       },
-      userName: {
+      username: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

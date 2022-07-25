@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
     } else {
       const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET)
 
-      return res.header("auth-token", token).send({ message: "logueado con exito", token })
+      return res.header("auth-token", token).send({ message: "logueado con exito", token, username: user.username })
     }
 
   } catch (error) {

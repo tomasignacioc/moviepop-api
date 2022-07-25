@@ -12,3 +12,5 @@ module.exports = function (req, res, next) {
     return res.status(400).send("Token invalido")
   }
 }
+
+// faltaria agregar un middleware para eliminar el token
