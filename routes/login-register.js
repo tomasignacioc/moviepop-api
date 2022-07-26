@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
 
       return res.status(400).send("Contraseña incorrecta")
     } else {
-      const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET)
+      const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: '1h' })
 
       return res.header("Auth-Token", token).send({ message: "logueado con exito", token, username: user.username })
     }
