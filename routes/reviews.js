@@ -22,14 +22,16 @@ router.get('/movie/:id', async (req, res) => {
 })
 
 router.post('/new/:id', verifyToken, async (req, res) => {
-  // const idMovieApi = req.params.id --> probar luego si se puede hacer una peticion a esta ruta desde :3000/movie/id
+  console.log(req.body);
   const idMovieApi = req.params.id
   const { text, score, username } = req.body
+
+  let parseScore = parseFloat(score)
   try {
     const newReview = await Review.create({
       movieId: idMovieApi,
       text,
-      score,
+      score: parseScore,
       username
     })
 

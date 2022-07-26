@@ -5,7 +5,7 @@ require('dotenv').config()
 const indexRouter = require('./routes/index')
 
 const app = express()
-const port = process.env.PORT || 3001
+const port = 3001
 
 app.use(cors())
 app.use(express.json())

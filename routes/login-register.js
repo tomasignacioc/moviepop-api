@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
     } else {
       const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET)
 
-      return res.header("auth-token", token).send({ message: "logueado con exito", token, username: user.username })
+      return res.header("Auth-Token", token).send({ message: "logueado con exito", token, username: user.username })
     }
 
   } catch (error) {
@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
       password: hashedPassword
     })
 
-    return res.status(201).send({ mensaje: "usuario creado!", data: user })
+    return res.status(201).send({ message: "usuario creado!", data: user })
   } catch (error) {
     console.log(error);
     return res.status(400).send(error.message)
