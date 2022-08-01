@@ -6,13 +6,19 @@ const { FavMovie } = require('../database/models')
 const router = Router()
 
 router.get('/user/', verifyToken, async (req, res) => {
+  const { id } = req.userVerification
 
   try {
-    const favoriteMovies = await FavMovie.findAll({
-      where: {
-        userId: req.userVerification.id
-      },
-      attributes: ["name"]
+    const favoriteMovies = await User.findOne({
+      where: { id },
+      attributes: ["username"],
+      include: [{
+        model: FavMovie,
+        through: {
+          attributes: []
+        },
+        attributes: ["name"]
+      }]
     })
 
     res.status(200).send(favoriteMovies)
@@ -22,23 +28,21 @@ router.get('/user/', verifyToken, async (req, res) => {
 })
 
 router.post('/add', verifyToken, async (req, res) => {
+  const { id } = req.userVerification
 
   try {
     const [favMovie, created] = await FavMovie.findOrCreate({
       where: { name: req.body.name },
-      defaults: {
-        name: req.body.name,
-        userId: req.userVerification.id
-      }
+      defaults: { name: req.body.name },
+      include: [User]
     })
 
-    if (!created) {
-      res.send({ message: "la pelicula ya fue agregada a Favoritos" })
-    } else {
-      res.status(203).send({ message: "pelicula agregada a Favoritos", favMovie })
-    }
+    const user = await User.findOne({ where: { id } })
+    await user.addFavMovie(favMovie)
+
 
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message)
   }
 })

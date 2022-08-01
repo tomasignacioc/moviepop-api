@@ -1,17 +1,26 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('FavMovies', {
+    await queryInterface.createTable('UserFavs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        allowNull: false,
-        unique: true,
-        type: Sequelize.STRING
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id"
+        }
+      },
+      FavMovieId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "FavMovies",
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,
@@ -20,13 +29,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      deletedAt: {
-        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('FavMovies');
+    await queryInterface.dropTable('UserFavs');
   }
 };

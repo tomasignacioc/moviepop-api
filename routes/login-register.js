@@ -10,12 +10,15 @@ router.post('/login', async (req, res) => {
 
   try {
     const user = await User.findOne({ where: { email } })
-    if (!user) return res.status(400).send("No existe un usuario asociado a ese email")
+
+    if (!user) {
+      return res.status(400).send({ message: "No existe un usuario asociado a ese email" })
+    }
 
     const passwordCheck = await bcrypt.compare(password, user.password)
     if (!passwordCheck) {
 
-      return res.status(400).send("Contraseña incorrecta")
+      return res.status(400).send({ message: "Contraseña incorrecta" })
     } else {
       const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: '1h' })
 
@@ -23,7 +26,6 @@ router.post('/login', async (req, res) => {
     }
 
   } catch (error) {
-
     return res.status(400).send(error.message)
   }
 })
@@ -34,8 +36,14 @@ router.post('/register', async (req, res) => {
   try {
     const emailExists = await User.findOne({ where: { email } })
     if (emailExists) {
-      return res.status(400).send("El email ya está siendo utilizado")
+      return res.status(400).send({ message: "El email ya está siendo utilizado" })
     }
+
+    const usernameExists = await User.findOne({ where: { username } })
+    if (usernameExists) {
+      return res.status(400).send({ message: "El nombre de usuario ya está siendo utilizado" })
+    }
+
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
