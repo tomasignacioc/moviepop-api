@@ -23,7 +23,7 @@ router.get('/user/', verifyToken, async (req, res) => {
 
     res.status(200).send(favoriteMovies)
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(400).send({ error: error.message })
   }
 })
 
@@ -40,11 +40,11 @@ router.post('/add', verifyToken, async (req, res) => {
     const user = await User.findOne({ where: { id } })
     await user.addFavMovie(favMovie)
 
-    res.status(201).send({ message: "Película agregada a favoritos!" })
+    res.status(201).send({ success: "Película agregada a favoritos!" })
 
   } catch (error) {
     console.log(error);
-    res.status(400).send(error.message)
+    res.status(400).send({ error: error.message })
   }
 })
 

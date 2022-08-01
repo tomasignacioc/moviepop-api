@@ -17,12 +17,12 @@ router.get('/movie/:id', async (req, res) => {
 
     res.status(200).send(movieReviews)
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(400).send({ error: error.message })
   }
 })
 
 router.post('/new/:id', verifyToken, async (req, res) => {
-  console.log(req.body);
+
   const idMovieApi = req.params.id
   const { text, score, username } = req.body
 
@@ -35,10 +35,10 @@ router.post('/new/:id', verifyToken, async (req, res) => {
       username
     })
 
-    res.status(200).send({ message: "reseña agregada", newReview })
+    res.status(200).send({ success: "reseña agregada", newReview })
 
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(400).send({ error: error.message })
   }
 
 })
