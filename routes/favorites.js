@@ -40,6 +40,7 @@ router.post('/add', verifyToken, async (req, res) => {
     const user = await User.findOne({ where: { id } })
     await user.addFavMovie(favMovie)
 
+    res.status(201).send({ message: "Película agregada a favoritos!" })
 
   } catch (error) {
     console.log(error);
