@@ -17,7 +17,7 @@ router.get('/user/', verifyToken, async (req, res) => {
         through: {
           attributes: []
         },
-        attributes: ["name"]
+        attributes: ["name", "apiId"]
       }]
     })
 
@@ -33,7 +33,7 @@ router.post('/add', verifyToken, async (req, res) => {
   try {
     const [favMovie, created] = await FavMovie.findOrCreate({
       where: { name: req.body.name },
-      defaults: { name: req.body.name },
+      defaults: { name: req.body.name, apiId: req.body.apiId },
       include: [User]
     })
 
