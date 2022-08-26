@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      movieId: {
+      movieTitle: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -17,6 +17,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       score: {
+        allowNull: false,
         type: Sequelize.FLOAT,
         validate: {
           min: 0,

@@ -5,12 +5,12 @@ const { Review } = require('../database/models')
 const router = Router()
 
 router.get('/movie/:id', async (req, res) => {
-  const idMovieApi = req.params.id
+  const movieTitle = req.params.id
 
   try {
     const movieReviews = await Review.findAll({
       where: {
-        movieId: idMovieApi
+        movieTitle
       },
       attributes: ["text", "score", "username"]
     })
@@ -23,15 +23,14 @@ router.get('/movie/:id', async (req, res) => {
 
 router.post('/new/:id', verifyToken, async (req, res) => {
 
-  const idMovieApi = req.params.id
+  const movieTitle = req.params.id
   const { text, score, username } = req.body
 
-  let parseScore = parseFloat(score)
   try {
     const newReview = await Review.create({
-      movieId: idMovieApi,
+      movieTitle,
       text,
-      score: parseScore,
+      score,
       username
     })
 

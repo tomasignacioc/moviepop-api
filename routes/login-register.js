@@ -6,6 +6,7 @@ const { User } = require('../database/models')
 const router = Router()
 
 router.post('/login', async (req, res) => {
+
   const { email, password } = req.body
 
   try {
