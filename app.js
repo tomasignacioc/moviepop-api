@@ -5,7 +5,6 @@ require('dotenv').config()
 const indexRouter = require('./routes/index')
 
 const app = express()
-const port = 3001
 
 app.use(cors())
 app.use(express.json())
@@ -13,7 +12,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/', indexRouter)
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
 
-  console.log(`Server listening in port: ${port}`)
+  console.log(`Server listening in port: ${process.env.PORT}`)
 })
